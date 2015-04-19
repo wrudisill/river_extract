@@ -1,0 +1,28 @@
+import gdal
+from gdalconst import *
+import numpy as np
+import sys
+
+def water_mask(filename):
+	ds5 = gdal.Open(str(filename) +'/'+ str(filename)+'_B5.TIF', GA_ReadOnly)
+	ds3 = gdal.Open(str(filename) +'/'+ str(filename)+'_B3.TIF', GA_ReadOnly)
+	cols = ds5.RasterXSize
+	rows = ds5.RasterYSize
+	band3 = ds3.GetRasterBand(1)
+	band5 = ds5.GetRasterBand(1)
+	b3= band3.ReadAsArray(0, 0, cols, rows).astype(np.float)
+	b5= band5.ReadAsArray(0, 0, cols, rows).astype(np.float)
+	im = np.zeros((rows,cols))
+	foo = np.where((b3+b5==0), 0, (b3-b5)/(b3+b5+0.00000000001))
+	return foo, cols, rows
+
+
+if __name__ == '__main__':
+	water_mask(sys.argv[1])
+
+
+
+
+
+
+	
