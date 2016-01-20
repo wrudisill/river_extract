@@ -3,24 +3,14 @@ import sys
 import matplotlib.pyplot as plt
 import os.path
 from pylab import *
-from scipy.ndimage import filters, morphology, measurements
-from collect_points import collect_points
-from least_cost import least_cost
-from ndwi import water_mask
-from ref import write_image, read_image
-from spatial_filter import spatial_filter
-from fill import fill_gaps
+from functions import *
 
-
-##simple case image
-# simple_case = np.random.rand(20,30)*255
-###
 
 #### checks if an NDWI tif already exists in folder
 #### if not, it creates one. image_array not scaled
 
-# enter file path
-folder = 'LC80520182013258LGN00'
+# or other folder name 
+folder = 'LC80520182013258LGN00' 
 
 if os.path.exists(folder+'/'+folder+'_NDWI.tif'):
 	image_array = read_image(folder+'/'+folder+'_NDWI.tif')	
